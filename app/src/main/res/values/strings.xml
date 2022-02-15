@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">wathers</string>
+    <string name="app_name">Weathers</string>
+    <string name="temperature">Температура</string>
+    <string name="image">image</string>
+    <string name="city_home">City Home</string>
+    <string name="temperature_day">Температура днём</string>
+    <string name="temperature_night">Температура ночью</string>
+    <string name="city">City</string>
 </resources>

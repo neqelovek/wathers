@@ -1,4 +1,4 @@
-package ru.gb.wathers.ui.main
+package ru.gb.weathers.ui.main
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.gb.wathers.R
+import ru.gb.weathers.R
 
 class MainFragment : Fragment() {
 

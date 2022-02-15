@@ -1,4 +1,4 @@
-package ru.gb.wathers
+package ru.gb.weathers
 
 import org.junit.Test
 

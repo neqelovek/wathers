@@ -1,8 +1,8 @@
-package ru.gb.wathers
+package ru.gb.weathers
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.gb.wathers.ui.main.MainFragment
+import ru.gb.weathers.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

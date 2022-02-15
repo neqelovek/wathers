@@ -1,4 +1,4 @@
-package ru.gb.wathers.ui.main
+package ru.gb.weathers.ui.main
 
 import androidx.lifecycle.ViewModel
 
