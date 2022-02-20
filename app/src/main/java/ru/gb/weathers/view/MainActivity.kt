@@ -1,8 +1,8 @@
-package ru.gb.weathers
+package ru.gb.weathers.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.gb.weathers.ui.main.MainFragment
+import ru.gb.weathers.R
 
 class MainActivity : AppCompatActivity() {
 

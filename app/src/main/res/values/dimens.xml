@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_top_city_home">16dp</dimen>
+    <dimen name="text_size_city_name">35sp</dimen>
+    <dimen name="margin_top_coordinates">5dp</dimen>
+    <dimen name="margin_start_temperature_day">10dp</dimen>
+    <dimen name="margin_top_temperature_day">16dp</dimen>
+    <dimen name="text_size_temperature">15sp</dimen>
+    <dimen name="gone_margin_end_temperature_day">16dp</dimen>
+    <dimen name="margin_top_temperature_night">16dp</dimen>
+    <dimen name="margin_end_temperature_night">10dp</dimen>
+    <dimen name="gone_margin_end_temperature_night">16dp</dimen>
+    <dimen name="margin_top_temperature">10dp</dimen>
+    <dimen name="text_size_temperature_numbers">30sp</dimen>
+    <dimen name="margin_top_loading_layout">230dp</dimen>
+</resources>
