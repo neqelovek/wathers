@@ -14,6 +14,7 @@ import ru.gb.weathers.model.Weather
 import ru.gb.weathers.viewModel.AppState
 import ru.gb.weathers.viewModel.MainViewModel
 
+
 class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
