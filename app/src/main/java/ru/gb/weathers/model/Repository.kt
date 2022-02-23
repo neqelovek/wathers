@@ -2,6 +2,8 @@ package ru.gb.weathers.model
 
 interface Repository {
     fun getWeatherFromServer(): Weather
-    fun getWeatherFromLocalStorage(): Weather
+    fun getHomeWeather(): Weather
+    fun getWeatherFromLocalStorageRus(): List<Weather>
+    fun getWeatherFromLocalStorageWorld(): List<Weather>
 
 }

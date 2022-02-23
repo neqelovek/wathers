@@ -89,84 +89,28 @@
             app:layout_constraintStart_toStartOf="@id/city_home_temperature_night"
             app:layout_constraintTop_toBottomOf="@id/city_home_temperature_night" />
 
-        <EditText
-            android:id="@+id/city"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_fragment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_fragment_recycler"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_CH_temperature_day" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_fragmentFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/city"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:textSize="@dimen/text_size_city_name"
-            android:textStyle="bold"
-            app:layout_constrainedWidth="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/fab_transformation_scrim_behavior"
+            android:src="@drawable/ic_russia"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/city_coordinates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_coordinates"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city" />
+            app:maxImageSize="@dimen/fab_icon_size" />
 
-        <TextView
-            android:id="@+id/city_temperature_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_start_temperature_day"
-            android:layout_marginTop="@dimen/margin_top_temperature_day"
-            android:text="@string/temperature_day"
-            android:textSize="@dimen/text_size_temperature"
-            android:textStyle="italic"
-            app:drawableTopCompat="@drawable/ic_baseline_wb_sunny_24"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/city_temperature_night"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/city_coordinates"
-            app:layout_goneMarginEnd="@dimen/gone_margin_end_temperature_day" />
-
-        <TextView
-            android:id="@+id/city_temperature_night"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_temperature_night"
-            android:layout_marginEnd="@dimen/margin_end_temperature_night"
-            android:text="@string/temperature_night"
-            android:textSize="@dimen/text_size_temperature"
-            android:textStyle="italic"
-            app:drawableTopCompat="@drawable/ic_baseline_brightness_3_24"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/city_temperature_day"
-            app:layout_constraintTop_toBottomOf="@id/city_coordinates"
-            app:layout_goneMarginEnd="@dimen/gone_margin_end_temperature_night" />
-
-        <TextView
-            android:id="@+id/text_city_temperature_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_temperature"
-            android:textSize="@dimen/text_size_temperature_numbers"
-            app:drawableRightCompat="@drawable/thermometer_weather"
-            app:layout_constraintEnd_toEndOf="@id/city_temperature_day"
-            app:layout_constraintStart_toStartOf="@id/city_temperature_day"
-            app:layout_constraintTop_toBottomOf="@id/city_temperature_day" />
-
-        <TextView
-            android:id="@+id/text_city_temperature_night"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_top_temperature"
-            android:textSize="@dimen/text_size_temperature_numbers"
-            app:drawableRightCompat="@drawable/thermometer_weather"
-            app:layout_constraintEnd_toEndOf="@id/city_temperature_night"
-            app:layout_constraintStart_toStartOf="@id/city_temperature_night"
-            app:layout_constraintTop_toBottomOf="@id/city_temperature_night" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout

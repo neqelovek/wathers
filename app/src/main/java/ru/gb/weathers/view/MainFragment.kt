@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.gb.weathers.R
 import ru.gb.weathers.databinding.MainFragmentBinding
 import ru.gb.weathers.model.Weather
+import ru.gb.weathers.view.details.DetailsFragment
 import ru.gb.weathers.viewModel.AppState
 import ru.gb.weathers.viewModel.MainViewModel
 
@@ -19,12 +20,28 @@ class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: MainViewModel
+    private var isDataSetRus: Boolean = true
+
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
+        override fun onItemViewClick(weather: Weather) {
+            val manager = activity?.supportFragmentManager
+
+            if (manager != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                manager.beginTransaction()
+                    .add(R.id.container, DetailsFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
+            }
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,26 +51,53 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.mainFragmentRecyclerView.adapter = adapter
+        binding.mainFragmentFAB.setOnClickListener { chengWeatherDataSet() }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         val observer = Observer<AppState> { renderData(it) }
+        val observer2 = Observer<AppState> { renderData(it) }
 
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getWeatherFromLocalSource()
+        viewModel.getWeatherFromLocalSourceRus()
+
+        viewModel.getLiveData().observe(viewLifecycleOwner, observer2)
+        viewModel.getWeatherHomeCity()
+
+    }
+
+    private fun chengWeatherDataSet() {
+        if(isDataSetRus){
+            viewModel.getWeatherFromLocalSourceWorld()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+        }else{
+            viewModel.getWeatherFromLocalSourceRus()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+        }
+        isDataSetRus =!isDataSetRus
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeListener()
+        _binding = null
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
+            is AppState.Start -> {
+                val weatherData = appState.weatherHome
+                setDataHomeCity(weatherData)
+            }
+
             is AppState.Success -> {
                 val weatherData = appState.weatherData
                 binding.loadingLayout.visibility = View.GONE
-                setData(weatherData)
+                adapter.setWeather(appState.weatherData)
+
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -62,23 +106,23 @@ class MainFragment : Fragment() {
                 binding.loadingLayout.visibility = View.GONE
 
                 Snackbar
-                    .make(binding.mainView, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
+                    .make(binding.mainFragmentFAB, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
                     .setAction(getString(R.string.reload)) {
-                        viewModel.getWeatherFromLocalSource()
+                        viewModel.getWeatherFromLocalSourceRus()
                     }
                     .show()
             }
         }
     }
 
-    private fun setData(weatherData: Weather) {
-        binding.cityHome.text = weatherData.city.city
+    private fun setDataHomeCity(weatherHome: Weather) {
+        binding.cityHome.text = weatherHome.city.city
         binding.cityHomeCoordinates.text = String.format(
             getString(R.string.city_coordinates),
-            weatherData.city.lat.toString(),
-            weatherData.city.lon.toString()
+            weatherHome.city.lat.toString(),
+            weatherHome.city.lon.toString()
         )
-        binding.textCHTemperatureDay.text = weatherData.dayTemperature.toString()
-        binding.textCHTemperatureNight.text = weatherData.nightTemperature.toString()
+        binding.textCHTemperatureDay.text = weatherHome.dayTemperature.toString()
+        binding.textCHTemperatureNight.text = weatherHome.nightTemperature.toString()
     }
 }
