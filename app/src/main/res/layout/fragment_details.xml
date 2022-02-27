@@ -55,8 +55,7 @@
             app:drawableRightCompat="@drawable/thermometer_weather"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_temperature_days_details_fragment"
-            tools:text="+15" />
+            app:layout_constraintTop_toBottomOf="@+id/text_temperature_days_details_fragment" />
 
         <TextView
             android:id="@+id/text_temperature_night_details_fragment"
@@ -79,8 +78,7 @@
             app:drawableRightCompat="@drawable/thermometer_weather"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_temperature_night_details_fragment"
-            tools:text="-23" />
+            app:layout_constraintTop_toBottomOf="@+id/text_temperature_night_details_fragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

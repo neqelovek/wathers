@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mainFragmentRecyclerView.adapter = adapter
-        binding.mainFragmentFAB.setOnClickListener { chengWeatherDataSet() }
+        binding.buttonCity.setOnClickListener { chengWeatherDataSet() }
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -72,10 +72,10 @@ class MainFragment : Fragment() {
     private fun chengWeatherDataSet() {
         if(isDataSetRus){
             viewModel.getWeatherFromLocalSourceWorld()
-            binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+            binding.buttonCity.setText(R.string.rus)
         }else{
             viewModel.getWeatherFromLocalSourceRus()
-            binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+            binding.buttonCity.setText(R.string.world)
         }
         isDataSetRus =!isDataSetRus
     }
@@ -106,7 +106,7 @@ class MainFragment : Fragment() {
                 binding.loadingLayout.visibility = View.GONE
 
                 Snackbar
-                    .make(binding.mainFragmentFAB, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
+                    .make(binding.buttonCity, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
                     .setAction(getString(R.string.reload)) {
                         viewModel.getWeatherFromLocalSourceRus()
                     }
