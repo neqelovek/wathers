@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">wathers</string>
+    <string name="app_name">Weathers</string>
+    <string name="temperature">Температура</string>
+    <string name="image">image</string>
+    <string name="city_home">City Home</string>
+    <string name="temperature_day">Температура днём</string>
+    <string name="temperature_night">Температура ночью</string>
+    <string name="city">Город</string>
+    <string name="city_coordinates">lt/ln: %s, %s</string>
+    <string name="reload" />
+    <string name="error" />
+    <string name="rus">Россия</string>
+    <string name="world">Мир</string>
 </resources>
