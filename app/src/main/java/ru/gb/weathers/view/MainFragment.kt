@@ -20,9 +20,12 @@ class MainFragment : Fragment() {
 
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
-    private var isDataSetRus: Boolean = true
 
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    private var isDataSetRus: Boolean = true
 
     companion object {
         fun newInstance() = MainFragment()
@@ -30,13 +33,11 @@ class MainFragment : Fragment() {
 
     private val adapter = MainFragmentAdapter(object : MainFragmentAdapter.OnItemViewClickListener {
         override fun onItemViewClick(weather: Weather) {
-            val manager = activity?.supportFragmentManager
-
-            if (manager != null) {
-                val bundle = Bundle()
-                bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
-                manager.beginTransaction()
-                    .add(R.id.container, DetailsFragment.newInstance(bundle))
+            activity?.supportFragmentManager?.apply {
+                beginTransaction()
+                    .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                    }))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -56,8 +57,6 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.buttonCity.setOnClickListener { chengWeatherDataSet() }
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         val observer = Observer<AppState> { renderData(it) }
         val observer2 = Observer<AppState> { renderData(it) }
 
@@ -69,16 +68,14 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun chengWeatherDataSet() {
-        if(isDataSetRus){
+    private fun chengWeatherDataSet() =
+        if (isDataSetRus) {
             viewModel.getWeatherFromLocalSourceWorld()
             binding.buttonCity.setText(R.string.rus)
-        }else{
+        } else {
             viewModel.getWeatherFromLocalSourceRus()
             binding.buttonCity.setText(R.string.world)
-        }
-        isDataSetRus =!isDataSetRus
-    }
+        }.also { isDataSetRus = !isDataSetRus }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -26,19 +26,18 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val weather = arguments?.getParcelable<Weather>(BUNDLE_EXTRA)
+        arguments?.getParcelable<Weather>(BUNDLE_EXTRA)?.let {
+            it.city.also {
+                binding.cityNameDetailsFragment.text = it.city
 
-        if (weather != null) {
-            val city = weather.city
-            binding.cityNameDetailsFragment.text = city.city
-
-            binding.cityCoordinatesDetailsFragment.text = String.format(
-                getString(R.string.city_coordinates),
-                city.lat.toString(),
-                city.lon.toString()
-            )
-            binding.temperatureDaysDetailsFragment.text = weather.dayTemperature.toString()
-            binding.temperatureNightDetailsFragment.text = weather.nightTemperature.toString()
+                binding.cityCoordinatesDetailsFragment.text = String.format(
+                    getString(R.string.city_coordinates),
+                    it.lat.toString(),
+                    it.lon.toString()
+                )
+            }
+            binding.temperatureDaysDetailsFragment.text = it.dayTemperature.toString()
+            binding.temperatureNightDetailsFragment.text = it.nightTemperature.toString()
         }
     }
 
@@ -46,7 +45,6 @@ class DetailsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
     companion object {
         const val BUNDLE_EXTRA = "weather"

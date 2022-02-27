@@ -27,10 +27,13 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(weather: Weather) {
-            itemView.findViewById<TextView>(R.id.main_fragment_recycler_item_text_view).text =
-                weather.city.city
-            itemView.setOnClickListener {
-                onItemViewClickListener?.onItemViewClick(weather)
+            itemView.apply {
+                findViewById<TextView>(R.id.main_fragment_recycler_item_text_view).text =
+                    weather.city.city
+
+                setOnClickListener {
+                    onItemViewClickListener?.onItemViewClick(weather)
+                }
             }
         }
     }
@@ -55,6 +58,5 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
     override fun getItemCount(): Int {
         return weatherData.size
     }
-
 
 }
