@@ -1,13 +1,19 @@
 package ru.gb.weathers.view
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.BoringLayout.make
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.make
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.main_fragment.*
 import ru.gb.weathers.R
 import ru.gb.weathers.databinding.MainFragmentBinding
 import ru.gb.weathers.model.Weather
@@ -47,7 +53,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,15 +63,15 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.buttonCity.setOnClickListener { chengWeatherDataSet() }
 
-        val observer = Observer<AppState> { renderData(it) }
-        val observer2 = Observer<AppState> { renderData(it) }
+        viewModel.apply {
+            val observer = Observer<AppState> { renderData(it) }
+            getLiveData().observe(viewLifecycleOwner, observer)
+            getWeatherFromLocalSourceRus()
 
-        viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getWeatherFromLocalSourceRus()
-
-        viewModel.getLiveData().observe(viewLifecycleOwner, observer2)
-        viewModel.getWeatherHomeCity()
-
+            val observer2 = Observer<AppState> { renderData(it) }
+            getLiveData().observe(viewLifecycleOwner, observer2)
+            getWeatherHomeCity()
+        }
     }
 
     private fun chengWeatherDataSet() =
@@ -88,13 +94,14 @@ class MainFragment : Fragment() {
             is AppState.Start -> {
                 val weatherData = appState.weatherHome
                 setDataHomeCity(weatherData)
+                binding.citySearch.setEndIconOnClickListener{
+                    city_search.showKeyboard()
+                    city_search.hideKeyboard()
+                }
             }
-
             is AppState.Success -> {
-                val weatherData = appState.weatherData
                 binding.loadingLayout.visibility = View.GONE
                 adapter.setWeather(appState.weatherData)
-
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -102,24 +109,49 @@ class MainFragment : Fragment() {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
 
-                Snackbar
-                    .make(binding.buttonCity, getString(R.string.error), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.reload)) {
-                        viewModel.getWeatherFromLocalSourceRus()
-                    }
-                    .show()
+                binding.main.showSnackbar(
+                    getString(R.string.error),
+                    getString(R.string.reload),
+                    { viewModel.getWeatherFromLocalSourceRus() }
+                )
             }
         }
     }
 
+    private fun View.showSnackbar(
+        text: String,
+        actionText: String,
+        action: (View) -> Unit,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        make(this, text, length).setAction(actionText, action).show()
+    }
+
     private fun setDataHomeCity(weatherHome: Weather) {
-        binding.cityHome.text = weatherHome.city.city
-        binding.cityHomeCoordinates.text = String.format(
-            getString(R.string.city_coordinates),
-            weatherHome.city.lat.toString(),
-            weatherHome.city.lon.toString()
-        )
-        binding.textCHTemperatureDay.text = weatherHome.dayTemperature.toString()
-        binding.textCHTemperatureNight.text = weatherHome.nightTemperature.toString()
+        binding.apply {
+            cityHome.text = weatherHome.city.city
+
+            cityHomeCoordinates.text = String.format(
+                getString(R.string.city_coordinates),
+                weatherHome.city.lat.toString(),
+                weatherHome.city.lon.toString()
+            )
+            textCHTemperatureDay.text = weatherHome.dayTemperature.toString()
+            textCHTemperatureNight.text = weatherHome.nightTemperature.toString()
+        }
+    }
+
+    fun View.showKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        this.requestFocus()
+        imm.showSoftInput(this, 0)
+    }
+
+    fun View.hideKeyboard(): Boolean {
+        try {
+            val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+        } catch (ignored: RuntimeException) { }
+        return false
     }
 }

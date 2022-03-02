@@ -11,4 +11,5 @@
     <string name="error" />
     <string name="rus">Россия</string>
     <string name="world">Мир</string>
+    <string name="city_search">Введите город</string>
 </resources>

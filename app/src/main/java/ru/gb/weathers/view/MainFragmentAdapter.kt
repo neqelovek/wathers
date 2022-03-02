@@ -1,6 +1,7 @@
 package ru.gb.weathers.view
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
 
     private var weatherData: List<Weather> = listOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setWeather(data: List<Weather>) {
         weatherData = data
         notifyDataSetChanged()
@@ -42,21 +44,15 @@ class MainFragmentAdapter(private var onItemViewClickListener: OnItemViewClickLi
         fun onItemViewClick(weather: Weather)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        return MainViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.fragment_main_recycler_item,
-                parent, false
-            ) as View
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.fragment_main_recycler_item,
+            parent, false
+        ) as View
+    )
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MainViewHolder, position: Int) =
         holder.bind(weatherData[position])
-    }
 
-    override fun getItemCount(): Int {
-        return weatherData.size
-    }
-
+    override fun getItemCount() = weatherData.size
 }
