@@ -13,7 +13,6 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.logging.LogManager
 import java.util.stream.Collectors
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -24,23 +23,23 @@ class WeatherLoader(
 ) {
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun loadWeather() {
+    fun loadWeather() =
         try {
             val uri =
-                URL("https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
+                URL("https://api.weather.yandex.ru/v2/forecast?lat=${lat}&lon=${lon}")
             val handler = Handler()
 
             Thread {
                 lateinit var urlConnection: HttpURLConnection
                 try {
-                    urlConnection = uri.openConnection() as HttpURLConnection
-                    urlConnection.requestMethod = "GET"
-                    urlConnection.readTimeout = 10000
-
-                    urlConnection.addRequestProperty(
-                        "yandex_weather_api_key",
-                        BuildConfig.WEATHER_API_KEY
-                    )
+                    urlConnection = (uri.openConnection() as HttpURLConnection).apply {
+                        requestMethod = "GET"
+                        readTimeout = 10000
+                        addRequestProperty(
+                            "yandex_weather_api_key",
+                            BuildConfig.WEATHER_API_KEY
+                        )
+                    }
 
                     val bufferedReader =
                         BufferedReader(InputStreamReader(urlConnection.inputStream))
@@ -50,7 +49,7 @@ class WeatherLoader(
                     val weatherDTO: WeatherDTO =
                         Gson().fromJson(response, WeatherDTO::class.java)
 
-                    handler.post{
+                    handler.post {
                         listener.onLoaded(weatherDTO)
                     }
 
@@ -66,9 +65,7 @@ class WeatherLoader(
             Log.e("", "Fail URI", e)
             e.printStackTrace()
             listener.onFailed(e)
-
         }
-    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {

@@ -3,7 +3,6 @@ package ru.gb.weathers.view
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.text.BoringLayout.make
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.make
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.main_fragment.*
 import ru.gb.weathers.R
 import ru.gb.weathers.databinding.MainFragmentBinding
