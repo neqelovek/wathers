@@ -134,8 +134,8 @@ class MainFragment : Fragment() {
                 weatherHome.city.lat.toString(),
                 weatherHome.city.lon.toString()
             )
-            textCHTemperatureDay.text = weatherHome.dayTemperature.toString()
-            textCHTemperatureNight.text = weatherHome.nightTemperature.toString()
+            textCHTemperature.text = weatherHome.Temperature.toString()
+            textCHTemperatureFeelsLike.text = weatherHome.feelsLike.toString()
         }
     }
 

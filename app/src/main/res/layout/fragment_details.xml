@@ -49,18 +49,17 @@
 
 
         <TextView
-            android:id="@+id/text_temperature_days_details_fragment"
+            android:id="@+id/text_temperature_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/temperature_day"
-            app:drawableTopCompat="@drawable/ic_baseline_wb_sunny_24"
+            android:text="@string/temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/weather_condition" />
 
         <TextView
-            android:id="@+id/temperature_days_details_fragment"
+            android:id="@+id/temperature_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
@@ -69,21 +68,20 @@
             app:drawableRightCompat="@drawable/thermometer_weather"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_temperature_days_details_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/text_temperature_details_fragment" />
 
         <TextView
-            android:id="@+id/text_temperature_night_details_fragment"
+            android:id="@+id/text_temperature_feels_like_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/temperature_night"
-            app:drawableTopCompat="@drawable/ic_baseline_brightness_3_24"
+            android:text="@string/feels_like"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature_days_details_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/temperature_details_fragment" />
 
         <TextView
-            android:id="@+id/temperature_night_details_fragment"
+            android:id="@+id/temperature_feels_like_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15_dp"
@@ -92,7 +90,7 @@
             app:drawableRightCompat="@drawable/thermometer_weather"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_temperature_night_details_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/text_temperature_feels_like_details_fragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

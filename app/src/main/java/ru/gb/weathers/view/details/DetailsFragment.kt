@@ -24,11 +24,9 @@ class DetailsFragment : Fragment() {
 
             override fun onLoaded(weatherDTO: WeatherDTO) {
                 displayWeather(weatherDTO)
-
             }
 
             override fun onFailed(throwable: Throwable) {
-
             }
         }
 
@@ -71,10 +69,8 @@ class DetailsFragment : Fragment() {
             )
 
             weatherCondition.text = weatherDTO.fact?.condition
-//            if (weatherDTO.fact?.daytime == "d") {
-//                temperatureDaysDetailsFragment.text = weatherDTO.fact?.temp.toString()
-//            } else (weatherDTO.fact?.daytime == "n")
-//            temperatureNightDetailsFragment.text = weatherDTO.fact?.temp.toString()
+            temperatureDetailsFragment.text = weatherDTO.fact?.temp.toString()
+            temperatureFeelsLikeDetailsFragment.text = weatherDTO.fact?.temp.toString()
         }
     }
 
