@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     private var isDataSetRus: Boolean = true
@@ -139,13 +139,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun View.showKeyboard() {
+    private fun View.showKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         this.requestFocus()
         imm.showSoftInput(this, 0)
     }
 
-    fun View.hideKeyboard(): Boolean {
+    private fun View.hideKeyboard(): Boolean {
         try {
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)

@@ -26,7 +26,7 @@ class WeatherLoader(
     fun loadWeather() =
         try {
             val uri =
-                URL("GET https://api.weather.yandex.ru/v2/informers?lat=${lat}&lon=${lon}")
+                URL("GET https://api.weather.yandex.ru/v2/forecast?lat=${lat}&lon=${lon}")
             val handler = Handler()
 
             Thread {
